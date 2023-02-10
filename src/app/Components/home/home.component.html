@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-8 pt-3">
+            <div>
+                <button class="btn btn-info float-end" mat-button (click)="addRow()">Add a Participant</button>
+            </div>
+            <div class="card mt-5 shadow-lg">
+                <div class="card-body table-responsive">
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th>No:</th>
+                                <th>Name</th>
+                                <th>E-mail</th>
+                                <th>Delete User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataSource | paginate:{itemsPerPage:5,currentPage:p}; index as i">
+                                <td>{{item.id}}</td>
+                                <td><input type="text" [(ngModel)]="item.name" required class="form-control" /></td>
+                                <td><input type="email" [(ngModel)]="item.email" required class="form-control" /></td>
+                                <td><button *ngIf="item.id>2" class="btn btn-danger"
+                                        (click)="removeRow(item.id)">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button [disabled]="" class="btn btn-primary float-end" (click)="onSubmit()">Send Mail</button>
+                    <div>
+                        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
