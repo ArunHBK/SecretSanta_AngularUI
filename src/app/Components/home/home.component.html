@@ -25,10 +25,31 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button [disabled]="" class="btn btn-primary float-end" (click)="onSubmit()">Send Mail</button>
+                    <button [disabled]="" class="btn btn-primary float-end" (click)="Submit()">Send Mail</button>
                     <div>
                         <pagination-controls (pageChange)="p=$event"></pagination-controls>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 mt-5">
+            <div class="card mt-3 p-3 shadow-sm">
+                   <h2> Add multiple people by CSV </h2>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <input class="form-control" formControlName="upload" type="file" accept=".csv"
+                        (change)="handleFileSelect($event)"
+                        [ngClass]="{ 'is-invalid':form.get('upload').touched && form.get('upload').invalid}">
+                    <div class="mt-2">
+                        <button [disabled]="form.invalid" class="btn btn-primary m-2">Send
+                            Mail</button>
+                    </div>
+
+                </form>
+                <div class="mt-2">
+                    <a href="assets/Participants.csv" class="btn btn-primary" target="_blank"
+                        download="Participants.csv">Download Sample <i class="fa fa-download"></i></a>
+
+                    <button class="btn btn-light float-end" (click)="onClear()">clear</button>
                 </div>
             </div>
         </div>

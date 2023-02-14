@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/Model/user.model';
+import { OtherService } from 'src/app/Service/other.service';
 import { SendMailService } from 'src/app/Service/send-mail.service';
 
 const USER_DATA = [
@@ -21,20 +24,30 @@ const USER_DATA = [
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  items: any[] = [];
+  items : User[]=[];
   p = 0;
   i = 3;
   dataSource = USER_DATA;
+  form: any;
 
   constructor(private sendMail: SendMailService,
     private router: Router,
-    ) { }
+    private formBuilder: FormBuilder,
+    private otherService: OtherService
+  ) { }
 
   ngOnInit(): void {
-
+    this.form = this.formBuilder.group({
+      upload: ['', Validators.required],
+    });
   }
 
-  onSubmit() {
+  handleFileSelect(evt: any) {
+    this.items = this.otherService.csvToJson(evt);
+    
+  }
+
+  Submit() {
     this.sendMail.sendMail(this.dataSource).subscribe({
       next: (result: any) => {
         console.log(result);
@@ -60,10 +73,31 @@ export class HomeComponent implements OnInit {
       email: '',
     };
     this.dataSource = [...this.dataSource, newRow];
+    console.log(this.dataSource)
   }
 
   removeRow(id: number) {
     this.dataSource = this.dataSource.filter((u) => u.id !== id);
   }
-
+  onSubmit() {
+    this.sendMail.sendMail(this.items).subscribe({
+      next: (result: any) => {
+        console.log(result);
+        alert(result.message);
+        location.reload();
+      },
+      error: (err: any) => {
+        let error = err.error;
+        if (error.message) {
+          alert(error.message);
+        }
+        else {
+          alert("Username and Email should be valid");
+        }
+      }
+    });
+  }
+  onClear() {
+    this.form.reset();
+  }
 }
