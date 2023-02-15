@@ -11,6 +11,6 @@ export class SendMailService {
   constructor(private http: HttpClient) { }
 
   public sendMail(data:any):Observable<any>{
-    return this.http.post("https://localhost:44389/api/SecretSanta/SendMail",data);
+    return this.http.post("https://localhost:44389/api/SecretSanta/SendMail",data); 
   }
 }
