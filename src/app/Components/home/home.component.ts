@@ -73,7 +73,6 @@ export class HomeComponent implements OnInit {
       email: '',
     };
     this.dataSource = [...this.dataSource, newRow];
-    console.log(this.dataSource)
   }
 
   removeRow(id: number) {
