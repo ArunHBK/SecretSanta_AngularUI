@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Model/user.model';
 import { OtherService } from 'src/app/Service/other.service';
@@ -24,7 +25,7 @@ const USER_DATA = [
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  items : User[]=[];
+  items: User[] = [];
   p = 0;
   i = 3;
   dataSource = USER_DATA;
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
   constructor(private sendMail: SendMailService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private otherService: OtherService
+    private otherService: OtherService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -44,23 +46,22 @@ export class HomeComponent implements OnInit {
 
   handleFileSelect(evt: any) {
     this.items = this.otherService.csvToJson(evt);
-    
   }
 
   Submit() {
     this.sendMail.sendMail(this.dataSource).subscribe({
       next: (result: any) => {
         console.log(result);
-        alert(result.message);
+        this.otherService.openSnackBar(result.message);
         location.reload();
       },
       error: (err: any) => {
         let error = err.error;
         if (error.message) {
-          alert(error.message);
+          this.otherService.openSnackBar(error.message);
         }
         else {
-          alert("Username and Email should be valid");
+          this.otherService.openSnackBar("Username and Email should be valid");
         }
       }
     });
@@ -82,16 +83,16 @@ export class HomeComponent implements OnInit {
     this.sendMail.sendMail(this.items).subscribe({
       next: (result: any) => {
         console.log(result);
-        alert(result.message);
+        this.otherService.openSnackBar(result.message);
         location.reload();
       },
       error: (err: any) => {
         let error = err.error;
         if (error.message) {
-          alert(error.message);
+          this.otherService.openSnackBar(error.message);
         }
         else {
-          alert("Username and Email should be valid");
+          this.otherService.openSnackBar("Username and Email should be valid");
         }
       }
     });

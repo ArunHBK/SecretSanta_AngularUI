@@ -8,6 +8,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxPaginationModule } from 'ngx-pagination';
 import { HttpClientModule} from '@angular/common/http';
+import { MatSnackBarModule } from "@angular/material/snack-bar"
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpClientModule} from '@angular/common/http';
     FormsModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
