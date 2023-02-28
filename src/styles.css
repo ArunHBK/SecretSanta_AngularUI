@@ -1,16 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 
-@media only screen and (min-width: 600px) {
-    body {
-        background-position: 50% 15%;
-        background-repeat: no-repeat;    }
-}
-
 body{
     background-color:#dfe2f5;
     background-image: url(https://www.secretsantaorganizer.com/build/images/content-container.5838ab5e.png);
-    background-position: 30% 20%;
+    background-position: 33% 16%;
     background-repeat: no-repeat;
 }
 html, body { height: 100%; }
